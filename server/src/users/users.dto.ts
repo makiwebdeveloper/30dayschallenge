@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
 
 export class CreateUserDto {
@@ -13,6 +14,20 @@ export class CreateUserDto {
   @IsNotEmpty()
   name: string;
 
+  @IsNotEmpty()
+  imageUrl: string;
+}
+
+export class UpdateUserDto {
+  @ApiProperty({
+    example: 'Bob Willson',
+  })
+  @IsNotEmpty()
+  name: string;
+
+  @ApiProperty({
+    example: 'https://website.com/another-image.jpg',
+  })
   @IsNotEmpty()
   imageUrl: string;
 }

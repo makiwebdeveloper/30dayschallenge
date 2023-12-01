@@ -18,4 +18,7 @@ model User {
 
   name     String
   imageUrl String @map("image_url")
+
+  friends         User[] @relation("friends")
+  friendsRelation User[] @relation("friends")
 }

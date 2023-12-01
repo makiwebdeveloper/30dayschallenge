@@ -65,6 +65,46 @@ export class UsersService {
     });
   }
 
+  async addFriend(userId: string, friendId: string) {
+    const user = await this.db.user.update({
+      where: { id: userId },
+      data: {
+        friends: {
+          connect: {
+            id: friendId,
+          },
+        },
+      },
+      include: {
+        friends: true,
+      },
+    });
+
+    await this.db.user.update({
+      where: { id: friendId },
+      data: {
+        friends: {
+          connect: {
+            id: userId,
+          },
+        },
+      },
+    });
+
+    return user;
+  }
+
+  async getFriends(userId: string) {
+    const user = await this.db.user.findUnique({
+      where: { id: userId },
+      include: { friends: true },
+    });
+
+    console.log(user.friends);
+
+    return user.friends;
+  }
+
   formatUser(user: User): IUser {
     const { passwordHash, salt, ...returnedUser } = user;
 

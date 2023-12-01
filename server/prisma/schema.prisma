@@ -21,4 +21,17 @@ model User {
 
   friends         User[] @relation("friends")
   friendsRelation User[] @relation("friends")
+
+  fromFriendshipRequests FriendshipRequests[] @relation("from")
+  toFriendshipRequests   FriendshipRequests[] @relation("to")
+}
+
+model FriendshipRequests {
+  fromUser   User   @relation("from", fields: [fromUserId], references: [id])
+  fromUserId String @map("from_user_id")
+
+  toUser   User   @relation("to", fields: [toUserId], references: [id])
+  toUserId String @map("to_user_id")
+
+  @@id([fromUserId, toUserId])
 }

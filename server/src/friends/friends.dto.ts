@@ -16,3 +16,27 @@ export class RemoveFriendDto {
   @IsNotEmpty()
   friendId: string;
 }
+
+export class CreateFriendshipRequestDto {
+  @ApiProperty({
+    example: 'to-user-id',
+  })
+  @IsNotEmpty()
+  toUserId: string;
+}
+
+export class AcceptFriendshipRequestDto {
+  @ApiProperty({
+    example: 'from-user-id',
+  })
+  @IsNotEmpty()
+  fromUserId: string;
+}
+
+export class CancelFriendshipRequestDto {
+  @ApiProperty({
+    example: 'from-user-id',
+  })
+  @IsNotEmpty()
+  fromUserId: string;
+}

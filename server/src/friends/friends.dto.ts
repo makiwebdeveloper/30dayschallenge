@@ -9,14 +9,6 @@ export class AddFriendDto {
   friendId: string;
 }
 
-export class RemoveFriendDto {
-  @ApiProperty({
-    example: 'friend-id',
-  })
-  @IsNotEmpty()
-  friendId: string;
-}
-
 export class CreateFriendshipRequestDto {
   @ApiProperty({
     example: 'to-user-id',

@@ -1,14 +1,20 @@
-import { Body, Controller, Delete, Get, Post, UseGuards } from '@nestjs/common';
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
+import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { GetSessionDto } from 'src/auth/auth.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { Session } from 'src/auth/session.decorator';
 import {
   AcceptFriendshipRequestDto,
-  AddFriendDto,
   CancelFriendshipRequestDto,
   CreateFriendshipRequestDto,
-  RemoveFriendDto,
 } from './friends.dto';
 import { FriendsService } from './friends.service';
 
@@ -77,13 +83,13 @@ export class FriendsController {
   }
 
   @ApiOkResponse()
-  @Delete()
+  @Delete(':friendId')
   @UseGuards(AuthGuard)
   async removeFriend(
     @Session() session: GetSessionDto,
-    @Body() body: RemoveFriendDto,
+    @Param('friendId') friendId: string,
   ) {
-    await this.friendsService.removeFriend(session.id, body.friendId);
+    await this.friendsService.removeFriend(session.id, friendId);
 
     return { message: 'Ok' };
   }

@@ -30,10 +30,10 @@ model User {
 }
 
 model FriendshipRequests {
-  fromUser   User   @relation("from", fields: [fromUserId], references: [id])
+  fromUser   User   @relation("from", fields: [fromUserId], references: [id], onDelete: Cascade)
   fromUserId String @map("from_user_id")
 
-  toUser   User   @relation("to", fields: [toUserId], references: [id])
+  toUser   User   @relation("to", fields: [toUserId], references: [id], onDelete: Cascade)
   toUserId String @map("to_user_id")
 
   @@id([fromUserId, toUserId])
@@ -47,7 +47,7 @@ model Challenge {
   title       String
   description String?
 
-  creator   User   @relation(fields: [creatorId], references: [id])
+  creator   User   @relation(fields: [creatorId], references: [id], onDelete: Cascade)
   creatorId String @map("creator_id")
 
   members MemberChallenge[]
@@ -58,10 +58,10 @@ model MemberChallenge {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  challenge   Challenge @relation(fields: [challengeId], references: [id])
+  challenge   Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
   challengeId String    @map("challenge_id")
 
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String @map("user_id")
 
   days Day[]
@@ -77,7 +77,7 @@ model Day {
   difficulty Difficulty?
   completed  Boolean     @default(false)
 
-  memberChallenge   MemberChallenge @relation(fields: [memberChallengeId], references: [id])
+  memberChallenge   MemberChallenge @relation(fields: [memberChallengeId], references: [id], onDelete: Cascade)
   memberChallengeId String          @map("member_challenge")
 }
 

@@ -1,3 +1,4 @@
+// TYPES
 export interface IUser {
   id: string;
   createdAt: Date;
@@ -6,3 +7,13 @@ export interface IUser {
   name: string;
   imageUrl: string;
 }
+
+// SELECTS
+export const UserSelect = {
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+  username: true,
+  name: true,
+  imageUrl: true,
+};

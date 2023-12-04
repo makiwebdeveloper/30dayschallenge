@@ -87,7 +87,7 @@ export class ChallengesService {
     return challenge;
   }
 
-  async getChallengesByUserId(userId?: string): Promise<IChallenge[]> {
+  async getChallengesByUserId(userId: string): Promise<IChallenge[]> {
     const challenges = await this.db.challenge.findMany({
       select: {
         ...ChallengeSelect,
@@ -95,12 +95,13 @@ export class ChallengesService {
           select: UserSelect,
         },
         members: {
-          where: { userId },
           select: MemberChallengeSelect,
         },
       },
     });
 
-    return challenges;
+    return challenges.filter((challenge) =>
+      challenge.members.find((member) => member.userId === userId),
+    );
   }
 }

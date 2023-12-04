@@ -7,7 +7,7 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { GetSessionDto } from 'src/auth/auth.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { Session } from 'src/auth/session.decorator';
@@ -68,7 +68,7 @@ export class FriendsController {
   }
 
   @ApiOkResponse()
-  @Post('cancel')
+  @Delete('cancel')
   @UseGuards(AuthGuard)
   async cancelFriendshipRequest(
     @Session() session: GetSessionDto,

@@ -15,8 +15,8 @@ export class FriendsService {
     const existRequest = await this.db.friendshipRequests.findUnique({
       where: {
         fromUserId_toUserId: {
-          fromUserId: toUserId,
-          toUserId: userId,
+          fromUserId: userId,
+          toUserId,
         },
       },
     });

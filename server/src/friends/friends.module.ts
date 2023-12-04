@@ -8,5 +8,6 @@ import { DbModule } from 'src/db/db.module';
   imports: [DbModule, UsersModule],
   controllers: [FriendsController],
   providers: [FriendsService],
+  exports: [FriendsService],
 })
 export class FriendsModule {}

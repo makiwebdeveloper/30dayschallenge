@@ -27,6 +27,9 @@ model User {
 
   fromFriendshipRequests FriendshipRequests[] @relation("from")
   toFriendshipRequests   FriendshipRequests[] @relation("to")
+
+  fromChallengeInvites ChallengeInvite[] @relation("from")
+  toChallengeInvites   ChallengeInvite[] @relation("to")
 }
 
 model FriendshipRequests {
@@ -50,7 +53,8 @@ model Challenge {
   creator   User   @relation(fields: [creatorId], references: [id], onDelete: Cascade)
   creatorId String @map("creator_id")
 
-  members MemberChallenge[]
+  members          MemberChallenge[]
+  challengeInvites ChallengeInvite[]
 }
 
 model MemberChallenge {
@@ -85,4 +89,17 @@ enum Difficulty {
   EASY
   MEDIUM
   HARD
+}
+
+model ChallengeInvite {
+  fromUser   User   @relation("from", fields: [fromUserId], references: [id], onDelete: Cascade)
+  fromUserId String @map("from_user_id")
+
+  toUser   User   @relation("to", fields: [toUserId], references: [id], onDelete: Cascade)
+  toUserId String @map("to_user_id")
+
+  challenge   Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  challengeId String
+
+  @@id([fromUserId, toUserId, challengeId])
 }

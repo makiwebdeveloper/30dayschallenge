@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { FriendsModule } from './friends/friends.module';
 import { DaysModule } from './days/days.module';
 import { ChallengesModule } from './challenges/challenges.module';
+import { ChallengeInvitesModule } from './challenge-invites/challenge-invites.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { ChallengesModule } from './challenges/challenges.module';
     FriendsModule,
     DaysModule,
     ChallengesModule,
+    ChallengeInvitesModule,
   ],
   controllers: [],
   providers: [],

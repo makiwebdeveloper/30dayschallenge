@@ -69,7 +69,7 @@ export class ChallengesController {
   @ApiQuery({
     name: 'userId',
     type: String,
-    required: false,
+    required: true,
   })
   @Get()
   @UseGuards(AuthGuard)

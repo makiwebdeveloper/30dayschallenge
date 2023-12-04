@@ -4,7 +4,7 @@ import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { Session } from 'src/auth/session.decorator';
 import { GetSessionDto } from 'src/auth/auth.dto';
-import { AcceptInviteDto, CreateInviteDto } from './challenge-invite.dto';
+import { AcceptInviteDto, CreateInviteDto } from './challenge-invites.dto';
 
 @ApiTags('Challenge Invites')
 @Controller('challenge-invites')

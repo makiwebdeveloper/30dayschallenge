@@ -1,8 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { DbService } from 'src/db/db.service';
-import { InviteDto } from './challenge-invite.dto';
+import { InviteDto } from './challenge-invites.dto';
 import { DaysService } from 'src/days/days.service';
 import { FriendsService } from 'src/friends/friends.service';
+import { IChallengeInvite } from './challenge-invites.types';
 
 @Injectable()
 export class ChallengeInvitesService {
@@ -12,7 +13,11 @@ export class ChallengeInvitesService {
     private friendsService: FriendsService,
   ) {}
 
-  async create({ fromUserId, toUserId, challengeId }: InviteDto) {
+  async create({
+    fromUserId,
+    toUserId,
+    challengeId,
+  }: InviteDto): Promise<void> {
     if (fromUserId === toUserId) {
       throw new BadRequestException();
     }
@@ -54,7 +59,11 @@ export class ChallengeInvitesService {
     });
   }
 
-  async accept({ fromUserId, toUserId, challengeId }: InviteDto) {
+  async accept({
+    fromUserId,
+    toUserId,
+    challengeId,
+  }: InviteDto): Promise<void> {
     if (fromUserId === toUserId) {
       throw new BadRequestException();
     }
@@ -72,7 +81,11 @@ export class ChallengeInvitesService {
     await this.delete({ fromUserId, toUserId, challengeId });
   }
 
-  async cancel({ fromUserId, toUserId, challengeId }: InviteDto) {
+  async cancel({
+    fromUserId,
+    toUserId,
+    challengeId,
+  }: InviteDto): Promise<void> {
     if (fromUserId === toUserId) {
       throw new BadRequestException();
     }
@@ -80,7 +93,7 @@ export class ChallengeInvitesService {
     await this.delete({ fromUserId, toUserId, challengeId });
   }
 
-  async addMember(userId: string, challengeId: string) {
+  async addMember(userId: string, challengeId: string): Promise<void> {
     const memberChallenge = await this.db.memberChallenge.create({
       data: {
         userId,
@@ -96,7 +109,7 @@ export class ChallengeInvitesService {
     }
   }
 
-  async delete(data: InviteDto) {
+  async delete(data: InviteDto): Promise<void> {
     await this.db.challengeInvite.delete({
       where: {
         fromUserId_toUserId_challengeId: {
@@ -106,7 +119,7 @@ export class ChallengeInvitesService {
     });
   }
 
-  async getInvites(userId: string) {
+  async getInvites(userId: string): Promise<IChallengeInvite[]> {
     return this.db.challengeInvite.findMany({
       where: {
         toUserId: userId,

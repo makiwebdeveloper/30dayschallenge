@@ -16,7 +16,7 @@ export class AuthService {
     private jwt: JwtService,
   ) {}
 
-  async signUp(data: SignUpDto) {
+  async signUp(data: SignUpDto): Promise<{ accessToken: string }> {
     const user = await this.usersService.findByUsername(data.username);
 
     if (user) {
@@ -41,7 +41,10 @@ export class AuthService {
     return { accessToken };
   }
 
-  async signIn({ username, password }: SignInDto) {
+  async signIn({
+    username,
+    password,
+  }: SignInDto): Promise<{ accessToken: string }> {
     const user = await this.usersService.findByUsername(username);
 
     if (!user) {

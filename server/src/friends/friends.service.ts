@@ -2,12 +2,16 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { DbService } from 'src/db/db.service';
 import { UsersService } from 'src/users/users.service';
 import { IFriendshipRequest } from './friends.types';
+import { IUser } from 'src/users/users.types';
 
 @Injectable()
 export class FriendsService {
   constructor(private db: DbService, private usersService: UsersService) {}
 
-  async createFriendshipRequest(userId: string, toUserId: string) {
+  async createFriendshipRequest(
+    userId: string,
+    toUserId: string,
+  ): Promise<void> {
     if (userId === toUserId) {
       throw new BadRequestException();
     }
@@ -39,7 +43,10 @@ export class FriendsService {
     });
   }
 
-  async acceptFriendshipRequest(userId: string, fromUserId: string) {
+  async acceptFriendshipRequest(
+    userId: string,
+    fromUserId: string,
+  ): Promise<void> {
     if (userId === fromUserId) {
       throw new BadRequestException();
     }
@@ -69,7 +76,10 @@ export class FriendsService {
     });
   }
 
-  async cancelFriendshipRequest(userId: string, fromUserId: string) {
+  async cancelFriendshipRequest(
+    userId: string,
+    fromUserId: string,
+  ): Promise<void> {
     if (userId === fromUserId) {
       throw new BadRequestException();
     }
@@ -100,7 +110,7 @@ export class FriendsService {
     }));
   }
 
-  async addFriend(userId: string, friendId: string) {
+  async addFriend(userId: string, friendId: string): Promise<void> {
     await this.db.user.update({
       where: { id: userId },
       data: {
@@ -127,7 +137,7 @@ export class FriendsService {
     });
   }
 
-  async removeFriend(userId: string, friendId: string) {
+  async removeFriend(userId: string, friendId: string): Promise<void> {
     if (userId === friendId) {
       throw new BadRequestException();
     }
@@ -158,7 +168,7 @@ export class FriendsService {
     });
   }
 
-  async getFriends(userId: string) {
+  async getFriends(userId: string): Promise<IUser[]> {
     const user = await this.db.user.findUnique({
       where: { id: userId },
       include: { friends: true },

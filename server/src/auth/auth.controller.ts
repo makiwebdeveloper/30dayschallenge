@@ -24,6 +24,10 @@ export class AuthController {
     const { accessToken } = await this.authService.signUp(body);
 
     this.cookieService.setToken(res, accessToken);
+
+    console.log('3213');
+
+    return { accessToken };
   }
 
   @ApiOkResponse()
@@ -35,6 +39,8 @@ export class AuthController {
     const { accessToken } = await this.authService.signIn(body);
 
     this.cookieService.setToken(res, accessToken);
+
+    return { accessToken };
   }
 
   @ApiOkResponse()
